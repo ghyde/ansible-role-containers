@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  role_name: containers
+  author: Garrett Hyde
+  description: Install packages for building and running Linux containers
+  issue_tracker_url: https://github.com/ghyde/ansible-role-containers/issues
+  license: MIT
+  min_ansible_version: 2.5
+  platforms:
+  - name: Fedora
+    versions:
+    - 28
+    - 29
+    - 30
+  galaxy_tags:
+  - fedora
+  - container
+...

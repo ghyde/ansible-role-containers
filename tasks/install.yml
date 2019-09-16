@@ -1,0 +1,8 @@
+---
+- name: install container packages
+  dnf:
+    name: "{{ container_packages }}"
+    state: present
+  become: True
+  become_user: root
+...
