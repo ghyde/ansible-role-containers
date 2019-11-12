@@ -5,4 +5,37 @@
     state: present
   become: True
   become_user: root
+
+# Ref: https://podman.io/blogs/2019/10/29/podman-crun-f31.html
+# Fedora 30 Ref: https://www.scrivano.org/2019/05/12/rootless-resources-management-with-podman-on-fedora-30/
+- block:
+  - name: install additional packages
+    dnf:
+      name:
+        - crun
+        - slirp4netns
+        - fuse-overlayfs
+      state: present
+    become: True
+    become_user: root
+
+  - name: use crun container runtime
+    lineinfile:
+      path: "{{ ansible_user_dir }}/.config/containers/libpod.conf"
+      state: present
+      regexp: "^runtime"
+      line: "runtime = crun"
+      backup: True
+
+  - name: use fuse-overlayfs
+    lineinfile:
+      path: "{{ ansible_user_dir}}/.config/containers/storage.conf"
+      state: present
+      regexp: '^    mount_program'
+      line: '    mount_program = "/usr/bin/fuse-overlayfs"'
+      insertafter: '^  [storage.options]'
+      backup: True
+  when:
+    - ansible_lsb.id == "Fedora"
+    - ansible_lsb.major_release|int >= 31
 ...
