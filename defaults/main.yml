@@ -1,4 +1,9 @@
 ---
+container_install_kata_runtime: False
+container_kata_runtime_packages:
+  - kata-proxy
+  - kata-runtime
+  - kata-shim
 container_packages:
   - buildah
   - podman

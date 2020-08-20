@@ -38,4 +38,12 @@
   when:
     - ansible_lsb.id == "Fedora"
     - ansible_lsb.major_release|int == 31
+
+- name: install Kata runtime
+  dnf:
+    name: "{{ container_kata_runtime_packages }}"
+    state: present
+  become: True
+  become_user: root
+  when: container_install_kata_runtime|bool
 ...
